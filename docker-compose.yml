@@ -13,20 +13,20 @@ services:
     networks:
       - production-network
     
-  appserver:
-    container_name: docker-spring-boot
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - production-network
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: starwars
-    depends_on:
-      - mongodb
+#  appserver:
+#    container_name: docker-spring-boot
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - production-network
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: starwars
+#    depends_on:
+#      - mongodb
 
 networks:
   production-network:
