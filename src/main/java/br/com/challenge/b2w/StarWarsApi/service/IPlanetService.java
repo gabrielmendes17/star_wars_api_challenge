@@ -1,6 +1,7 @@
 package br.com.challenge.b2w.StarWarsApi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.com.challenge.b2w.StarWarsApi.model.Planet;
 
@@ -14,6 +15,6 @@ public interface IPlanetService {
 
 	Planet findById(String id);
 
-	Planet findByName(String name);
+	Optional<List<Planet>> findByName(String name);
 
 }
