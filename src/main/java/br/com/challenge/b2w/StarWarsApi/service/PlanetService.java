@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.challenge.b2w.StarWarsApi.dto.SwapiDto;
+import br.com.challenge.b2w.StarWarsApi.exceptionhandler.PlanetDoesNotExistsException;
 import br.com.challenge.b2w.StarWarsApi.exceptionhandler.SwapiException;
 import br.com.challenge.b2w.StarWarsApi.model.Planet;
 import br.com.challenge.b2w.StarWarsApi.repository.PlanetRepository;
@@ -69,7 +69,7 @@ public class PlanetService implements IPlanetService {
 	@Override
 	public Planet findById(String id) {
 		Optional<Planet> planet = planetRepository.findById(id);
-		return planet.orElseThrow(() -> new EmptyResultDataAccessException(message.getMessage("menssage.error.planet.does-not-exists"), 1));
+		return planet.orElseThrow(() -> new PlanetDoesNotExistsException(message.getMessage("menssage.error.planet.does-not-exists")));
 	}
 	
 

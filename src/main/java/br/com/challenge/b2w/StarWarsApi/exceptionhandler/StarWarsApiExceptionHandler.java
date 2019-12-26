@@ -46,6 +46,11 @@ public class StarWarsApiExceptionHandler extends ResponseEntityExceptionHandler 
 		return new ResponseEntity<>(getError(ex, HttpStatus.SERVICE_UNAVAILABLE), HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
+	@ExceptionHandler(PlanetDoesNotExistsException.class)
+	public final ResponseEntity<?> handlePlanetaInexistenteException(PlanetDoesNotExistsException ex) {
+		return new ResponseEntity<>(getError(ex, HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(SwapiException.class)
     public final ResponseEntity<?> handleSWAPIException(SwapiException ex) {
         return new ResponseEntity<>(getError(ex, HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
