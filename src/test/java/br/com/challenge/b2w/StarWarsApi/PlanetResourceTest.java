@@ -52,7 +52,15 @@ public class PlanetResourceTest {
 	
     @Test
     public void listPlanetsShouldReturnStatusCode200() {
-        List<Planet> Planets = asList(new Planet("1", "Endor", "tropical", "mountains", 0), new Planet("2", "Aragorn", "tropical", "mountains", 0));
+        List<Planet> Planets = asList(new Planet("1", "Geonosis", "temperate, arid", "rock, desert, mountain, barren", 0), new Planet("2", "Kamino", "temperate", "ocean", 0));
+        BDDMockito.when(PlanetRepository.findAll()).thenReturn(Planets);
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/planets/", String.class);
+        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(200);
+    }
+    
+    @Test
+    public void listPlanetsWhenNoPlanetsWereFoundShouldReturnEmptyListAndStatusCode200() {
+        List<Planet> Planets = asList();
         BDDMockito.when(PlanetRepository.findAll()).thenReturn(Planets);
         ResponseEntity<String> response = restTemplate.getForEntity("/api/planets/", String.class);
         Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(200);
@@ -60,7 +68,7 @@ public class PlanetResourceTest {
 
     
     @Test
-    public void getPlanetByIdWhenIdAreCorrectShouldReturnStatusCode200() {
+    public void getPlanetByIdWhenIdIsCorrectShouldReturnStatusCode200() {
         ResponseEntity<Planet> response = restTemplate.getForEntity("/api/planets/{id}", Planet.class, "1");
         Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(200);
     }
@@ -73,6 +81,12 @@ public class PlanetResourceTest {
     
     @Test
     public void getPlanetByNameShouldIgnoreCaseAndReturnStatusCode200() {
+        ResponseEntity<Planet> response = restTemplate.getForEntity("/api/planets/name/{name}", Planet.class, "alderaan");
+        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(200);
+    }
+    
+    @Test
+    public void getPlanetByNameWhenNameNotFoundShouldReturnStatusCode200() {
         ResponseEntity<Planet> response = restTemplate.getForEntity("/api/planets/name/{name}", Planet.class, "alderaan");
         Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(200);
     }
